@@ -1,0 +1,119 @@
+<div class="section no-pad-bot" id="index-banner">
+	<div class="container">
+		<div class="row">
+				<div class="col s12 m5 push-m7">
+				
+				<div class="card registration" >
+					<div class="card-image" style="background-image:url('/assets/images/profile.jpg')" id={{dropzone.id}}>
+{{#if isLoggedIn}}
+{{#if uploadFileUrl}}
+	<div style="top:0px;position:absolute;width:100%;text-align:center;background-color:rgba(255,255,255,0.5);padding:1em">
+
+	<a id="upload-image" class="btn" style="padding:0 0.5em" {{action 'acceptPhoto'}}><i class="material-icons" style="font-size:2em;line-height:16px;">done</i></a>  
+	<a id="upload-image" class="btn error" style="padding:0 0.5em; background-color:#CC0030" {{action 'cancelPhoto'}}><i class="material-icons" style="font-size:2em;line-height:16px;">clear</i></a>  
+
+	</div> 
+
+{{else}}
+
+{{#q-uploader for-dropzone="upload-image" for="upload-image" url="uploadfile" extensions="jpg jpeg png gif" multiple="false" onfileadd="setUploadImage" as |queue dropzone|}}
+      <div style="top:0px;position:absolute;width:100%;text-align:center;background-color:rgba(255,255,255,0.5);padding:1em">
+      {{#if dropzone.active}}
+        {{#if dropzone.valid}}
+          Drop now
+        {{else}}
+          Invalid
+        {{/if}}
+      {{else}}
+        {{#if dropzone.enabled}}
+          <a id="upload-image" style="font-size:12px;line-height:16px;color:#888;cursor: pointer;cursor:hand;">
+          <i class="material-icons" style="font-size:2em;line-height:16px;">add_a_photo</i>
+          <b>Click to upload (160x160 px)</b></a>  
+        {{/if}}
+      {{/if}}
+      </div> 
+{{/q-uploader}}
+
+{{/if}}
+{{/if}}
+		{{#if uploadFileUrl}}
+			<div class="profileimg" style="background-image:url({{uploadFileUrl}});">
+        	</div>			
+		{{else}}
+		    <div class="profileimg" style="background-image:url({{avatarProfileUrl}});">
+        	</div>				
+		{{/if}}
+			<span class="card-title white-text">{{displayName}}</span>
+		</div>
+					{{#unless isLoggedIn}}
+					<div class="card-content">
+						<div class="row">
+						<form {{action "loginAction" on="submit"}}>
+						<div class="input-field col s12">
+						  <label for="loginname">{{loc-x '/login/login'}}</label>
+						  {{q-input value=loginname class="validate" valid=true update=(action (mut loginname)) id="loginname"}}
+						</div>
+						<div class="input-field col s12">
+						  <label for="loginpassword">{{loc-x '/login/password'}}</label>
+						  {{q-input type="password" value=loginpassword isValid=true update=(action (mut loginpassword)) id="loginpassword"}}
+						</div>
+						<div class="col s6">
+						<button class="btn waves-effect waves-light" type="submit" name="action">{{loc-x '/login/send_login'}}</button>
+						</div> 
+						</form>
+
+						<div class="s6 col">
+						    {{#link-to 'profile.forgotpwd'}}{{loc-x '/general/forgot_password'}}{{/link-to}}
+						</div>
+
+						<div class="s12 col padding-bottom foreign-login">
+						<br/>{{#link-to 'profile.signup' class="signup-link"}}{{loc-x '/login/signup'}}{{/link-to}}{{loc-x '/general/not_registered_signup'}}
+						</div>  		            		    
+				
+						</div> 
+					</div>					
+					<div class="social-action">
+					<div>
+						<form method="post" id="facebookPost" action="/api/facebooklogin">
+						<a href="#" class="btn waves-effect waves-light facebook-button" {{action 'facebooklogin'}}>{{loc-x '/login/facebook'}}</a>
+						</form>
+					</div>
+					<div>
+						<form method="post" id="googlePost" action="/api/googlelogin">
+						<a href="#" class="btn waves-effect waves-light google-button" {{action 'googlelogin'}}>{{loc-x '/login/google'}}</a>
+						</form>
+					</div>
+					</div>
+					{{else}}
+					<div class="card-content">
+						{{#if user.name}}
+   					  	<span class="icon-text"><i class="material-icons">account_circle</i> {{user.name}}</span><br/>
+						{{/if}}	
+    					<span class="icon-text"><i class="material-icons">contact_mail</i> {{user.email}}</span>
+					</div>
+					<div class="card-action">
+					{{#link-to 'profile.modify'}}{{loc-x '/profile/change_data'}}{{/link-to}}
+					<a href="#" {{action 'signout'}} class="right">{{loc-x '/profile/signout'}}</a>
+					
+					</div>
+				{{/unless}}
+				</div>
+
+				{{post-question}}
+			</div>
+
+
+			<div class="col s12 m7 pull-m5">
+			<div class="q-link collection">
+			{{#link-to 'profile.index' class="collection-item"}}{{loc-x '/profile/posted_questions'}} <span class="count badge">{{setup.ownquestion}}</span>{{/link-to}}
+
+			{{#link-to 'profile.answered' class="collection-item"}}{{loc-x '/profile/answered'}} <span class="count badge">{{setup.answered}}</span>{{/link-to}}
+			
+				</div>
+			{{outlet}}
+			</div>
+			
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,24 @@
+<li class="result-post">
+	<div class="pgravatar">
+        <div class="profileimg" style="background-image:url({{comment.avatarUrl}});width:50px;height:50px;top:0px" >
+        </div>	
+	</div>
+	<div class="pbody">
+	<header>
+	<span class="pname">{{#unless comment.useracc}}Anonymous{{else}}{{comment.useracc.displayName}}{{/unless}}</span><span class="tspacer">-</span><span class="ptime">{{comment.postdate}}</span>
+	</header>
+	<p class="ptext">{{{comment.formatedComment}}}</p>
+	<p class="icon-text"><a href="#" {{action 'togglePostResponse'}}>Reply <i class="material-icons">reply</i></a></p>
+	{{#if postResponse}}
+	{{post-comment question=comment.question parent=comment onComment="onComment"}}
+	{{/if}}
+	
+	{{#if (gt-num comment.replies.length 0)}}
+	<ul>
+	{{#each comment.replies as |childcomment|}}
+		{{q-comment comment=childcomment onComment="onComment"}}
+	{{/each}}
+	</ul>	
+	{{/if}}
+	</div>
+</li>

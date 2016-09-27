@@ -1,0 +1,107 @@
+{{#app-view}}
+<header>
+  <nav role="navigation" id="navigation">
+    <div class="nav-wrapper container">{{#link-to 'index' class="brand-logo"}}<img src="/assets/images/logo.png" data-pin-nopin="true" />{{/link-to}}
+      <ul class="right hide-on-med-and-down">
+        <li class="{{if (starts-with currentPath 'question.edit') 'active'}}">{{#link-to 'question.edit' 0 'new' }}{{loc-x '/button/post_question'}}{{/link-to}}</li>        
+        <li class="q-menu-profile {{if (starts-with currentPath 'profile') 'active'}}">{{#link-to 'profile'}}<span style="float:left">{{username}}</span>
+        <div class="profileimg" style="background-image:url({{avatarUrl}});">
+        </div>
+        {{/link-to}}
+        </li>
+      </ul>
+
+      <ul id="slide-out" class="side-nav" style="z-index:1000">
+        <!--li>{{!link-to 'Popular' 'filter' 'default' 'popular'}}</li-->   
+        <li class="{{if (starts-with currentPath 'filter') 'active'}}">{{#link-to 'filter' 'latest' 'all'}}{{loc-x '/category/latest'}}{{/link-to}}</li>              
+        <li class="q-menu-profile {{if (starts-with currentPath 'question.edit') 'active'}}">{{#link-to 'question.edit' 0 'new' }}{{loc-x '/button/post_question'}}{{/link-to}}</li>              
+        <li class="q-menu-profile {{if (starts-with currentPath 'profile') 'active'}}">{{#link-to 'profile'}}{{loc-x '/menu/profile'}}<div class="profileimgmob" style="background-image:url({{avatarUrl}});">
+        </div>{{/link-to}}</li>      
+
+
+        <li>&nbsp;</li>      
+        <li>{{#link-to 'terms'}}{{loc-x '/bottom/license'}}{{/link-to}}</li>
+        <li>{{#link-to 'privacy'}}{{loc-x '/bottom/privacy'}}{{/link-to}}</li>
+        <li>{{#link-to 'cpolicy'}}{{loc-x '/bottom/cookie_policy'}}{{/link-to}}</li>
+
+
+      </ul>
+      <div class="preloader-wrapper small active hide-on-large-only {{unless loading 'hide'}}" style="top:8px;position:relative;">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <a href="#" data-activates="slide-out" class="button-collapse {{if loading 'hide'}}" ><i class="material-icons">menu</i></a>
+    </div>
+	<!--div class="q-categories container">
+        <ul>
+        <li>Your</li>
+        <li>Politics</li>
+		<li>Lifestyle</li>
+		<li>Funny</li>
+      </ul>
+	</div-->
+
+  </nav>
+
+</header>
+  <main id="main">
+  {{outlet}}
+  </main>
+  <footer class="page-footer" id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col m6 s12">
+          <h5>{{loc-x '/bottom/bio'}}</h5>
+          <p>{{loc-x '/bottom/bio_desc'}}</p>
+          {{#link-to 'question.edit' 0 'new' class="waves-effect waves-light btn accent-btn white-text"}}{{loc-x '/button/post_question'}}{{/link-to}}
+        </div>
+        <div class="col m3 s12">
+          <ul>
+            <li>{{#link-to 'index'}}{{loc-x '/category/popular'}}{{/link-to}}</li>
+            <li>{{#link-to 'filter' 'latest' 'all'}}{{loc-x '/category/latest'}}{{/link-to}}</li>
+          </ul>
+        </div>
+        <div class="col m3 s12">
+          <h5>Regulations</h5>        
+          <ul>
+            <li>{{#link-to 'terms'}}{{loc-x '/bottom/license'}}{{/link-to}}</li>
+            <li>{{#link-to 'privacy'}}{{loc-x '/bottom/privacy'}}{{/link-to}}</li>
+            <li>{{#link-to 'cpolicy'}}{{loc-x '/bottom/cookie_policy'}}{{/link-to}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      @ 2015 qumla.com
+      </div>
+    </div>
+  </footer>
+{{/app-view}}
+{{#if loading}}
+<div id="loader" style="position:fixed;top:0px;left:0px;width:100%;height:100%;background:rgba(255, 255, 255, 0.3);z-index:10000">
+<div style="position:absolute;top:8px;width:100%;text-align:center;" class="hide-on-med-and-down">
+<div class="preloader-wrapper small active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{{/if}}
+{{#if showModal}}
+{{component modalName model=modalModel closeModal='closeModal'}}
+{{/if}}

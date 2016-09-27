@@ -2,11 +2,23 @@
   "predef": [
     "document",
     "window",
-    "-Promise"
+    "-Promise",
+    "moment",
+    "Chartist",
+    "Swiper",
+    "App",
+    "Materialize",
+	"Fingerprint2",
+	"grecaptcha",
+  "ga",
+  "google",
+  "Awesomplete",
+  "$",
+  "addthis"
   ],
   "browser": true,
   "boss": true,
-  "curly": true,
+  "curly": false,
   "debug": false,
   "devel": true,
   "eqeqeq": true,
@@ -28,5 +40,5 @@
   "white": false,
   "eqnull": true,
   "esnext": true,
-  "unused": true
+  "unused": false
 }

@@ -1,0 +1,13 @@
+ <!-- Modal Structure -->
+<div id="confirmModal" class="modal">
+  <div class="modal-content">
+    <h4>{{model.header}}</h4>
+    <p>{{model.text}}</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" {{action 'positive'}} class=" modal-action modal-close waves-effect waves-green btn-flat">{{positiveText}}</a>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" {{action 'negative'}} class=" modal-action modal-close waves-effect waves-green btn-flat">{{negativeText}}</a>
+  </div>  
+</div>

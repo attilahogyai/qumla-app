@@ -1,0 +1,76 @@
+{{#unless hideHeader}}
+{{#if enableEditLink}}
+{{#if (gt-num question.answerCount 0)}}
+<span class="marker" style="left:0px"><i class="material-icons material-icons">done_all</i> {{question.answerCount}}</span>
+{{else}}
+<span class="marker" style="left:0px">
+{{#link-to 'question.edit' question.id 'edit'  class="waves-effect btn-flat"}}<i class="material-icons material-icons">edit</i>{{/link-to}}	
+</span>
+{{/if}}
+{{/if}}
+{{#if question.isClosed}}
+<span class="marker" style="right:0px;">
+<div class="tooltip"><i class="material-icons material-icons">https</i><span class="tooltiptext">Closed</span>
+</div>
+</span>
+{{else}}
+{{#if question.answered}}
+<span class="marker" style="right:0px;">
+<i class="material-icons material-icons">check_circle</i>
+</span>
+{{/if}}
+{{/if}}
+{{#if enableDetailLink }}
+
+{{#link-to 'question.detail' question.id (to-ascii question.title) (query-params result="true" t=question.ticket)}}
+<div class="card-image" style="background-image:url('{{headerImg}}'); border-top-color: rgb({{question.color}});border-top-style: solid;border-top-width: 3px;">
+<!--	<span class="card-title question-title" style="background-color: rgba({{question.color}},0.8);">{{question.title}}</span>//-->
+</div>
+<span class="card-title question-title" style="background-color: rgb({{question.color}});display: block;padding: 0.7em;color: white;">{{question.title}}</span>
+{{/link-to}}
+{{else}}
+<div class="card-image" style="background-image:url('{{headerImg}}')">
+	<span class="card-title question-title" style="background-color: rgba({{question.color}},0.8);">{{question.title}}</span>
+</div>
+{{/if}}
+{{/unless}}
+
+{{#if (or-b showDescription showOptions showUrl)}}
+<div class="card-content">
+	{{#if showDescription}}
+	<p class="question-desc">
+	{{{question.description}}}
+	</p>	
+	{{else}}
+	<p class="truncate question-desc"  {{action 'openDetail'}}>
+	{{{question.description}}}
+	</p>
+	{{/if}}
+
+	{{#if showUrl}}
+	<br/>
+	<p class="truncate">
+	reference: <a href="{{question.url}}" target="about:blank">{{question.url}}</a>
+	</p>
+	{{/if}}	
+
+	{{#if showOptions}}
+	<div class="collection">
+		{{#each question.options as |option| }}
+		<a href="#!" class="collection-item {{option.style}} {{if option.isSelected 'active'}}" {{action 'selectAnswer' option}}>
+			{{option.text}}
+			{{#if option.isSelected}}
+			<div class="vote wave accent-btn" {{action 'vote' option}}>Send vote</div>
+			{{/if}}
+		</a>
+		{{/each}}
+	</div> 		
+	{{/if}}
+
+</div>
+{{/if}}
+{{#if (and-b (not-b question.mandatory) showOptions) }}
+<div class="card-action">
+	{{#link-to 'question.detail' question.id (to-ascii question.title) (query-params result="true")}}Skip answer{{/link-to}}
+</div>
+{{/if}}

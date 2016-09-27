@@ -1,0 +1,16 @@
+<div class="card q-card q-chart">
+<div class="card-content">	
+<header>
+<span class="card-title"><i class="material-icons">map</i>
+{{#unless regionText}}
+<span>{{countryText}}</span>
+<div class="tooltip right"><i class="material-icons right">info</i><span class="tooltiptext">Country majority votes are colored</span></div>
+{{else}}
+<a href="#" {{action 'backToRegion'}}>{{countryText}}</a><span> > {{regionText}}</span>
+<div class="tooltip right"><i class="material-icons right">info</i><span class="tooltiptext">Region majority votes are colored</span></div>
+{{/unless}}
+</span>
+</header>
+<div id="{{rid}}" style="width: 100%; height: 100%;"></div>
+</div>
+</div>

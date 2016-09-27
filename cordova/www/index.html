@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<!--
+<?php
+$dbconn = pg_connect("host=93.186.254.73 port=5432 dbname=qumla user=qumla password=Qu312");
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$title="Vote, ask questions, comment, tell your opinion";
+$desc="Ask your question! See others' opinion and give voice to yours.";
+$q=substr($path, 0,9);
+
+$img="https://qumla.com/images/share-icon.png".$row[2];
+
+if ($q="/question"){
+    $idEnd=strpos($path,'/',10);
+    $id=substr($path,10,$idEnd-10);
+
+    $sql = "SELECT q.title, q.description, q.img, i.width,i.height FROM qumla.question q, qumla.image i where q.img=i.path and q.id=".(int)$id;
+
+    $result = pg_query($dbconn, $sql);
+
+    $img="";
+    $width="";
+    $height="";
+
+    $detaildesc="";
+    while ($row = pg_fetch_row($result)) {
+      $title=$row[0];
+      if($row[1]!=""){
+        $desc=$row[1];
+        $detaildesc=$row[1];
+      }
+      $img="https://qumla.com/img/question/".$row[2];
+      $width=$row[3];
+      $height=$row[4];
+    }
+}else if($q="/hashtag"){
+  $idEnd=strpos($path,'/',9);
+  $tag=substr($path,10,$idEnd-10);
+
+  $title="Hashtag filter - ".$tag;
+}else if($q="/filter/latest"){
+  $title="Latest questions";
+}
+
+pg_close ($dbconn);
+
+$addthisid="ra-570e96ba6aadaeb1";
+if($_SERVER['HTTP_HOST']="qumla.com"){
+    $addthisid="ra-571e667248d9cbc7";
+}
+
+?>
+-->
+  <head><!--<?=$_SERVER['SERVER_NAME']?>/<?=$idEnd?>/<?=$id?> -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><?=$title?></title>
+<meta property="fb:app_id"  content="1555390384771806" />
+<meta property="og:url"  data-og-url="" content="https://qumla.com<?=$_SERVER[REQUEST_URI]?>" />
+<meta property="og:type" data-og-type="" content="article" />
+<meta property="og:title" data-og-title="" content="<?=$title?>" />
+<meta property="og:description" data-og-description="" content="<?=$detaildesc?>"/>
+<meta property="og:image" data-og-image="" content="<?=$img?>"/>
+<meta property="og:image:width" content="<?=$width?>"/>
+<meta property="og:image:height" content="<?=$height?>"/>
+<meta property="og:image:url" data-og-image-url="" content="<?=$img?>"/>
+<meta property="og:image:secure_url"  data-og-image-secure-url="" content="<?=$img?>"/>
+<meta property="twitter:image"  data-twitter-image="" content="<?=$img?>"/>
+<meta name="twitter:card" content="summary" />
+
+
+    <meta name="description" content="<?=$desc?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <base href="/" />
+<meta name="qumla/config/environment" content="%7B%22modulePrefix%22%3A%22qumla%22%2C%22podModulePrefix%22%3A%22qumla/pods%22%2C%22environment%22%3A%22development%22%2C%22baseURL%22%3A%22/%22%2C%22locationType%22%3A%22auto%22%2C%22defaultLocationType%22%3A%22auto%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%7D%2C%22APP%22%3A%7B%22perPage%22%3A5%2C%22name%22%3A%22qumla%22%2C%22version%22%3A%220.0.0+abbe8fdf%22%7D%2C%22contentSecurityPolicy%22%3A%7B%22default-src%22%3A%22%27none%27%22%2C%22font-src%22%3A%22%27self%27%20data%3A%20fonts.gstatic.com%20themes.googleusercontent.com%22%2C%22style-src%22%3A%22%27self%27%20%27unsafe-inline%27%20fonts.googleapis.com%20ajax.googleapis.com%20www.google.com%22%2C%22script-src%22%3A%22%27self%27%20%27unsafe-inline%27%20%27unsafe-eval%27%20use.typekit.net%20connect.facebook.net%20*.googleapis.com%20maps.gstatic.com%20www.google.com%20cdnjs.cloudflare.com%20www.gstatic.com%20s7.addthis.com%20m.addthis.com%22%2C%22connect-src%22%3A%22%27self%27%22%2C%22img-src%22%3A%22%27self%27%20data%3A%20www.facebook.com%20csi.gstatic.com%20maps.gstatic.com%20*.googleapis.com%20s7.addthis.com%20%20secure.gravatar.com%22%2C%22frame-src%22%3A%22s-static.ak.facebook.com%20static.ak.facebook.com%20www.facebook.com%20s7.addthis.com%22%2C%22media-src%22%3A%22%27self%27%22%7D%2C%22contentSecurityPolicyHeader%22%3A%22Content-Security-Policy-Report-Only%22%2C%22sassOptions%22%3A%7B%22includePaths%22%3A%5B%22bower_components/foundation/scss%22%5D%7D%2C%22exportApplicationGlobal%22%3Atrue%7D" />
+<script src="/ember-cli-live-reload.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="assets/vendor.css">
+    <link rel="stylesheet" href="assets/app.css">
+    <!--script src="phonegap.js"></script-->
+    
+<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+<script type="text/javascript">
+    window.cookieconsent_options = {"message":"This website uses cookies and your location to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":"/cpolicy","theme":"dark-top"};
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
+
+  </head>
+  <body onresize="if(Ember.changeSize){Ember.changeSize(); return true;}">
+  <nav role="navigation" id="preNavigation">
+    <div class="nav-wrapper container"><a id="ember650" href="#" class="brand-logo ember-view active"><img src="/assets/images/logo.png"></a>
+      <ul class="right hide-on-med-and-down">
+        <!--li></li-->      
+            <li><a id="ember657" href="#" class="ember-view"> </a></li>
+      </ul>
+    </div>
+    <div id="loader" style="position:fixed;top:0px;left:0px;width:100%;height:100%;">
+<div style="position:absolute;top:8px;width:100%;text-align:center;" class="hide-on-med-and-down">
+<div class="preloader-wrapper small active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  </nav>  
+    
+
+    <script src="assets/vendor.js"></script>
+    <script src="assets/qumla.js"></script>
+   
+    
+    
+    <script src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['geochart']}]}
+"></script> 
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5zaeF81zrW1sZwPwfF7CSFhZ3c7NU9LI&libraries=visualization"></script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=<?=$addthisid?>"></script>
+    <script src='https://www.google.com/recaptcha/api.js?render=explicit' async defer></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    
+
+  </body>
+</html>

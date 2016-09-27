@@ -1,0 +1,44 @@
+<div class="row">
+
+<div class="col s12">
+<div class="card-content">
+<!--div class="card-image">
+<span class="card-title question-title" style="background-color: rgba({{question.color}},0.8);">{{!question.title}}</span>
+</div-->
+{{{loc-x '/question/vote-title'}}}
+<span class="vote-title">
+{{question.title}}
+</span>
+<img class="right hide-on-small-only" style="max-height:250px;max-width:350px;margin-left: 1em;margin-bottom:20px;margin-top:0" src="{{headerImg}}" >
+	{{#if showDescription}}
+	<p class="question-desc" style="min-width:300px;">
+	{{{question.encodedDescription}}}
+	</p>	
+	{{else}}
+	<p class="truncate question-desc"  {{action 'openDetail'}} style="min-width:300px;">
+	{{{question.encodedDescription}}}
+	</p>
+	{{/if}}
+
+	<br/>
+	{{#if showUrl}}
+	<p class="truncate" style="min-width:300px;">
+	reference: <a href="{{question.url}}" target="about:blank">{{question.url}}</a>
+	</p>
+	{{/if}}	
+
+	<div class="collection" style="min-width:300px;">
+		{{#each question.sortedOptions as |option| }}
+		<a href="#!" class="collection-item {{option.style}} {{if option.isSelected 'active'}}" {{action 'selectAnswer' option}}>
+			{{option.text}}
+			{{!#if option.isSelected}}
+			<!--div class="vote wave accent-btn" {{action 'vote' option}}>Send vote</div-->
+			{{!/if}}
+		</a>
+		{{/each}}
+	</div> 		
+<img class="hide-on-med-and-up" src="{{headerImg}}" style="width:100%">
+
+</div>
+</div>
+</div>

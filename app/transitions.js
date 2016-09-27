@@ -1,0 +1,20 @@
+export default function(){
+  this.transition(
+    this.fromRoute('index'),
+    this.toRoute('question'),
+    this.use('toLeft'),
+    this.reverse('toRight')
+  );
+  this.transition(
+    this.fromRoute('question.detail'),
+    this.toRoute('question.result'),
+    this.use('crossFade'),
+    this.reverse('crossFade')
+  ); 
+  this.transition(
+    this.fromRoute('index'),
+    this.toRoute('filter'),
+    this.use('crossFade'),
+    this.reverse('crossFade')
+  );  
+}

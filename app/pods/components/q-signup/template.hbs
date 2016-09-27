@@ -1,0 +1,98 @@
+<form {{action "sendData" on="submit"}}>
+{{#if forgotpassword}}
+<div class="card">
+<div class="card-content">
+  <span class="card-title">Change password</span>
+<div class="row">
+<div class="input-field col s12">
+  {{q-input type="text" class="" id="email" isValid=(v-get this 'forgotemail' 'isValid') value=forgotemail update=(action (mut forgotemail))}}
+  <label for="email" class="{{if forgotemail 'active'}}">{{loc-x '/signup/email'}} {{v-get this 'forgotemail' 'message'}}</label>
+</div>
+<div class="input-field col s12">
+  {{q-input type="password" class="" id="newPassword" isValid=(v-get this 'newPassword' 'isValid') value=newPassword update=(action (mut newPassword))}}
+  <label for="newPassword">{{loc-x '/signup/new_password'}} </label>
+</div>
+<div class="input-field col s12">
+  {{q-input type="password" class="" id="newPassword2" isValid=(v-get this 'newPassword2' 'isValid') value=newPassword2 update=(action (mut newPassword2))}}
+  <label for="newPassword2">{{loc-x '/signup/new_confirm_password'}} {{v-get this 'newPassword2' 'message'}}</label>
+</div>
+</div>
+</div>
+<div class="card-action">
+<button class="btn waves-effect waves-light" type="button" disabled={{forgotDisabled}} name="action"  {{action "forgotPassword"}}>Change password</button> 
+</div>
+</div>
+{{else}}
+<div class="card">
+<div class="card-content">
+  <span class="card-title">{{title}}</span>
+<div class="row">
+<div class="input-field col s12">
+  <label for="name" class="{{if user.name 'active'}}">{{loc-x '/signup/name'}} </label>
+  {{q-input value=user.name update=(action (mut user.name)) class="" isValid=(v-get user 'name' 'isValid') id="name"}}
+</div>
+<div class="input-field col s12">
+  <label for="login" class="{{if user.login 'active'}}">{{loc-x '/signup/nickname'}} {{v-get user 'login' 'message'}}</label>
+  {{q-input value=user.login update=(action (mut user.login)) class="" isValid=(v-get user 'login' 'isValid') id="login"}}
+</div>
+{{#unless modify}}
+<div class="input-field col s12">
+  {{q-input type="text" class="" id="email" isValid=(v-get user 'email' 'isValid') value=user.email update=(action (mut user.email))}}
+  <label for="email" class="{{if user.email 'active'}}">{{loc-x '/signup/email'}} {{v-get user 'email' 'message'}}</label>
+</div>
+<div class="input-field col s12">
+  {{q-input type="password" class="" id="password" isValid=(v-get user 'password' 'isValid') value=user.password update=(action (mut user.password))}}
+  <label for="password">{{loc-x '/signup/password'}} </label>
+</div>
+<div class="input-field col s12">
+  {{q-input type="password" class="" id="password2" isValid=(v-get user 'password2' 'isValid') value=user.password2 update=(action (mut user.password2))}}
+  <label for="password2">{{loc-x '/signup/confirm_password'}} {{v-get user 'password2' 'message'}}</label>
+</div>
+<div class="input-field col s12">
+  {{one-way-checkbox checked=privacy update=(action (mut privacy))}}
+  <label for="privacy" style="position:absolute" {{action 'privacyCheck'}}>{{loc-x '/signup/privacy_check'}}</label>
+  <br><br>{{#link-to 'privacy'}}{{loc-x '/signup/privacy_check_link'}}{{/link-to}}
+</div>
+{{else}}
+<div class="input-field col s12">
+  {{q-input type="text" class="" id="email" disabled=true value=user.email}}
+  <label for="email" class="{{if user.email 'active'}}">{{loc-x '/signup/email'}} {{v-get user 'email' 'message'}}</label>
+</div>
+{{/unless}}
+</div>
+</div>
+<div class="card-action">
+{{#if modify}}
+<button class="btn waves-effect waves-light" {{action "sendData"}} type="button" disabled={{saveDisabled}} name="action">Save</button>
+{{else}}
+<button class="btn waves-effect waves-light" type="submit" disabled={{saveDisabled}} name="action">Save</button>
+{{/if}}
+</div>
+</div>
+{{#if changePasswordEnabled}}
+<div class="card">
+<div class="card-content">
+  <span class="card-title">Change password</span>
+<div class="row">
+<div class="input-field col s12">
+  {{q-input type="password" class="" id="oldPassword" isValid=(v-get this 'oldPassword' 'isValid')  value=oldPassword update=(action (mut oldPassword))}}
+  <label for="oldPassword">{{loc-x '/signup/old_password'}} </label>
+</div>
+<div class="input-field col s12">
+  {{q-input type="password" class="" id="newPassword" isValid=(v-get this 'newPassword' 'isValid') value=newPassword update=(action (mut newPassword))}}
+  <label for="newPassword">{{loc-x '/signup/new_password'}} </label>
+</div>
+<div class="input-field col s12">
+  {{q-input type="password" class="" id="newPassword2" isValid=(v-get this 'newPassword2' 'isValid') value=newPassword2 update=(action (mut newPassword2))}}
+  <label for="newPassword2">{{loc-x '/signup/new_confirm_password'}} {{v-get this 'newPassword2' 'message'}}</label>
+</div>
+</div>
+</div>
+<div class="card-action">
+<button class="btn waves-effect waves-light" type="button" disabled={{v-get this 'isInvalid'}} name="action"  {{action "sendPassword"}}>Change password</button> 
+</div>
+</div>
+{{/if}}
+{{/if}}
+</form>
+

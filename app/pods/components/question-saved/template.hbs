@@ -1,0 +1,17 @@
+ <!-- Modal Structure -->
+<div id="questionSavedModal" class="modal">
+  <div class="modal-content">
+    <h4><i class="material-icons">done</i>{{loc-x '/question/saved'}}</h4>
+    {{#if model.ticket}}
+   	<p>{{loc-x '/question/saved_popup_private'}}</p>    
+    <p>
+    <input type="text" value="{{model.privateUrl}}" class="selectall" onclick={{action 'selectUrl' this}}>
+    </p>
+    {{else}}
+    <p>{{loc-x '/question/saved_popup'}}</p>    
+    {{/if}}
+  </div>
+  <div class="modal-footer">
+    <a href="#!" {{action 'close'}} class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="card" >
+{{#link-to 'question.detail' question.id (to-ascii question.title) (query-params result="true")}}
+	<div class="card-image" style="background-image:url('{{question.headerImg}}')">
+		<span class="card-title white-text truncate" style="background-color: rgba({{question.color}},0.8);">{{question.title}}</span>
+	</div>
+{{/link-to}}
+	<div class="card-content">
+	    {{#link-to 'filter' 'latest' 'all'}}{{{loc-x '/index/latest_question'}}}{{/link-to}}
+		
+		{{#if (gt-num comments.length 0)}}
+		<br/>
+		<div class="recent-comment">
+		<span class="card-title body-text">{{loc-x '/index/recent_comments'}}</span>
+		
+		{{#each comments as |comment|}}
+		<p>
+		{{#link-to 'question.detail' comment.question.id (to-ascii comment.question.title)}}
+		<i class="material-icons">chat_bubble_outline</i> {{{comment.comment}}}
+		{{/link-to}}
+		</p>
+		{{/each}}
+		</div>
+
+		{{/if}}
+	</div>
+</div>

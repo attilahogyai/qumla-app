@@ -1,0 +1,16 @@
+{{#if wrap}}
+<div class="general-votes row" style="margin:1em 0;">
+<div id="{{cid}}" class="s12 m7 col">
+</div>
+<div class="legend s12 m5 col" style="position:relative">
+<ul>
+{{#each allOptions as |item index|}}
+<li><span class="color-series-{{item.index}} buble"></span><span style="color:{{item.color}}">{{item.text}}</span></li>
+{{/each}}
+</ul>
+</div>
+</div>
+{{else}}
+<div id="{{cid}}" class="{{class}}" style="position:relative">
+</div>
+{{/if}}

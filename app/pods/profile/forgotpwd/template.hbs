@@ -1,0 +1,20 @@
+<form {{action "sendResetPasswordEmail" on="submit"}}>
+<div class="card">
+<div class="card-content">
+  <span class="card-title">{{loc-x '/forgot/title'}}</span>
+    <p>{{loc-x '/forgot/text'}}</p>  
+  <div class="row">
+    <div class="input-field col s12">
+      {{q-input type="text" class="" id="email" isValid=(v-get this 'email' 'isValid') value=email update=(action (mut email))}}
+      <label for="email" class="{{if email 'active'}}">{{loc-x '/signup/email'}}</label>
+    </div>
+    <div class="input-field col s12">
+    <button class="btn waves-effect waves-light" type="submit" disabled={{v-get this 'isInvalid'}} name="action">{{loc-x '/forgot/change_request'}}</button> 
+    </div>
+ 
+  </div>
+
+</div>
+</div>
+</form>
+

@@ -1,0 +1,11 @@
+  {{textarea value=commentText id=textareaid class="materialize-textarea q-textarea" rows=1 }}
+  {{#unless parent}}
+  <label for="{{textareaid}}"><i class="material-icons">mode_edit</i>
+  {{#if (eq-o question.comments.length 0)}}
+  Be the first commenter
+  {{else}}
+  Post comment  
+  {{/if}}
+  </label>
+  {{/unless}}
+  <a class="waves-effect waves-light inv-btn" {{action 'createComment' question parent commentText}}>Post</a>

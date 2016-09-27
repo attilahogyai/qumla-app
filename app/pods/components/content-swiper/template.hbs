@@ -1,0 +1,17 @@
+<!-- Additional required wrapper -->
+<div class="swiper-wrapper">
+    {{yield}}
+</div>
+<!-- If we need pagination -->
+{{#if pagination}}
+<div class="swiper-pagination"></div>
+{{/if}}
+<!-- If we need navigation buttons -->
+{{#if navigation}}
+<div class="swiper-button-prev"></div>
+<div class="swiper-button-next"></div>
+{{/if}}
+<!-- If we need scrollbar -->
+{{#if scrollbar}}
+<div class="swiper-scrollbar"></div>
+{{/if}}

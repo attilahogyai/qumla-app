@@ -1,0 +1,201 @@
+<form class="col s12" {{action "onNext" on="submit"}}>
+<div class="card-panel">
+  <span class="card-title"><h5>{{loc-x '/question/post_question'}}</h5></span>   
+  {{!#liquid-spacer growDuration=250}}
+  <div class="row">
+    <div class="input-field col m9 s12">
+      <label for="title" class="{{if question.title 'active'}}">{{loc-x '/question/type_question'}}</label>
+      {{input type="text" class="validate awesomplete" id="title" required="yes" value=question.title maxlength=190}}
+    </div>
+    <div class="input-field col m3 s12">
+    {{#q-select value=question.language id="language" default=defaultLanguage.pcode}}
+    {{#each languages as |language|}}
+    {{#x-option value=language.pcode selected=(eq-o language.pcode defaultLanguage.pcode)}}{{language.name}}{{/x-option}}
+    {{/each}}
+    {{/q-select}}
+    <label for="language">{{loc-x '/question/language'}}</label>
+
+    </div>
+    <div class="input-field col s12 moreDetail" style="display:none">
+      <label for="description" class="{{if question.description 'active'}}"><i class="material-icons">description</i> {{loc-x '/question/detail_question'}}</label>      
+      {{textarea value=question.description id="description" class="materialize-textarea q-textarea awesomplete"}}
+    </div> 
+    <div class="input-field col s12 moreDetail" style="display:none">
+      {{input type="url" class="validate" id="url" value=question.url }}
+      <label for="url" data-error="wrong" class="{{if question.url 'active'}}">
+      <i class="material-icons">link</i> {{loc-x '/question/article_link_question'}}
+      </label>      
+    </div> 
+    {{on-ready ready='ready'}}    
+  </div>
+  {{#if (gt-num step 1)}}
+  <span><h5>{{loc-x '/question/type_of_question_question'}}</h5></span>
+  <div class="row">
+  <div class="col s12">
+  <div class="collection">
+    <a href="#!" class="collection-item {{if (eq-o question.type 1) 'active'}}" {{action 'prefill' 1}}>{{loc-x '/question/yesno_question'}}</a>
+    <a href="#!" class="collection-item {{if (eq-o question.type 2) 'active'}}" {{action 'prefill' 2}}>{{loc-x '/question/agree_question'}}</a>
+    <a href="#!" class="collection-item {{if (eq-o question.type 3) 'active'}}" {{action 'prefill' 3}}>{{loc-x '/question/yesmaybe_question'}}</a>
+    <a href="#!" class="collection-item {{if (eq-o question.type 4) 'active'}}" {{action 'prefill' 4}}>{{loc-x '/question/otheranswer_question'}}</a>
+  </div>
+  </div>
+  </div>
+
+  <!--div class="row">
+  <div class="col s12">
+
+  {{!place-autocomplete-field value=address disable=false
+  handlerController= this
+  inputClass= 'place-autocomplete--input'
+  focusOutCallback='done' 
+  placeChangedCallback='placeChanged'
+  }}
+  </div>
+  </div-->
+  
+  {{#if showOptions}}
+
+  <span><h5>{{loc-x '/question/answers_question'}}</h5></span>
+  <div class="row">
+  {{#each question.options as |option index|}}
+  <div class="input-field col s12">
+    {{input type="text" class="validate" required="yes" placeholder=(grad-str (concat-str '#' (add-num index 1) ' answer')) value=option.text id=(concat-str 'op' index)}}
+  </div>
+  {{/each}}
+  </div>
+  {{/if}}
+  {{#if customType}}
+  <div class="row">
+  <div class="col s12 right-align">
+  {{#if (gt-num question.options.length 2)}}
+  <a class="btn-floating waves-effect waves-light grey white-text" {{action 'removeOption'}}><i class="material-icons">remove</i></a>
+  {{/if}}
+  {{#if (lt-num question.options.length 25)}}
+  <a class="btn-floating waves-effect waves-light accent-btn white-text" {{action 'addOption'}}><i class="material-icons">add</i></a>
+  {{/if}}
+  </div>
+  </div>
+  {{/if}}
+  {{/if}}
+  
+
+  {{#if (gt-num step 2)}}
+  
+  {{#unless isNew}}
+  <span><h5>{{loc-x '/question/image_question'}}</h5></span>
+  <div class="row">
+  <div class="col s12">
+  <div class="swiper-slide card">
+    <div class="card-image" style="background-image:url('/img/thumb/{{question.img}}')">
+      <button class="btn waves-effect waves-light" type="button" {{action 'changeImage'}} style="width:100%">Change image <i class="material-icons material-icons right">insert_photo</i></button>
+      <span class="card-title question-title">{{question.title}}</span>
+    </div>
+  </div>
+  </div>
+  </div>
+  {{/unless}}
+  <div class="row" id="photoSelector" style="{{unless isNew 'display:none'}}">
+  <div class="col s12">
+  <span><h5>{{loc-x '/question/selectfoto_question'}}</h5></span>
+  {{#content-swiper class="swiper-container"  pagination=true scrollbar=true navigation=true}}
+      {{#each images as |image|}}
+      {{#if (eq-o image.status 1)}}
+      <div class="swiper-slide card hoverable {{if (eq-o image.id selectedImage.id) 'active'}} " >
+      <div class="card-image" style="background-image:url('/img/thumb/{{image.path}}')" {{action 'selectImage' image}}>
+        <span class="card-title question-title">{{question.title}}</span>
+      </div>
+      </div>
+      {{/if}}
+      {{/each}}
+  {{/content-swiper}}
+{{#q-uploader for-dropzone="upload-image" for="upload-image" url="uploadfile" extensions="jpg jpeg png gif" multiple="false" onfileadd="setUploadImage" as |queue dropzone|}}
+    <div class="swiper-slide card hoverable {{if (eq-o uploadImage.path selectedImage.path) 'active'}}" id={{dropzone.id}}>
+    <div class="card-image" style="background-image:url('{{uploadFileUrl}}')" {{action 'selectImage' uploadImage}}>
+      <span class="card-title question-title">{{question.title}}</span>
+      <div style="top:0px;position:absolute;width:100%;text-align:center;background-color:rgba(255,255,255,0.5);padding:1em">
+      {{#if dropzone.active}}
+        {{#if dropzone.valid}}
+          Drop now
+        {{else}}
+          Invalid
+        {{/if}}
+      {{else}}
+        {{#if dropzone.enabled}}
+          <a id="upload-image" style="font-size:16px;line-height:16px">
+          <i class="material-icons" style="font-size:16px;line-height:16px">add_a_photo</i>
+          {{loc-x '/question/picture_upload'}}</a>   
+        {{/if}}
+      {{/if}}
+      </div> 
+    </div>
+    </div>
+{{/q-uploader}}
+
+  </div>  
+  </div>
+    
+  <div class="row">
+  {{#unless session.isRegistered}}
+
+  <div class="col s12">
+  {{#link-to 'profile.index'}}
+  <img src="/assets/images/registration-required-tiny.png" class="left" style="padding-right:1em">
+  {{/link-to}}
+  <span class="icon-text">
+  {{#link-to 'profile.index'}}
+  <h5 style="margin-top:0px">{{loc-x '/question/more_settings'}}</h5>
+  {{loc-x '/question/more_settings_reg'}}
+  {{/link-to}}
+  </span>
+  </div>
+
+  {{else}}
+  <div class="col s12">
+  <span class="icon-text"><h5><a href="#" {{action 'setupMore'}}>{{loc-x '/question/more_settings'}}</a></h5></span>
+  </div>
+  <div class="input-field col s12 advancedSetup" data-showed="{{if (not-b question.id) 'false' 'true'}}" style="{{if (not-b question.id) 'display:none'}}">
+    {{input type="text" value=validTill id="valid_till" class="datepicker"}}
+    <label for="valid_till" class="{{if question.validTill 'active'}}"><i class="material-icons">date_range</i> {{loc-x '/question/valid_till'}}</label>    
+    {{on-ready ready='readyMore'}}    
+  </div> 
+  <div class="input-field col s12 advancedSetup" style="{{if (not-b question.id) 'display:none'}}">
+
+    <div class="switch">
+    &nbsp;
+      <label>
+        Public <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="{{loc-x '/question/public_tooltip'}}"><i class="material-icons">info_outline</i></a>
+        {{input type="checkbox" disabled=(not-b session.isRegistered) name="isPrivate" checked=isPrivate}}
+        <span class="lever"></span>
+        Private <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="{{loc-x '/question/private_tooltip'}}"><i class="material-icons">info_outline</i></a>
+      </label>
+      &nbsp;
+    </div>
+  </div>    
+  {{#if privateUrl}}
+    <div class="input-field  col s12 advancedSetup" style="margin-top:2.5em">
+        <input type="text" value="{{privateUrl}}" id="privateURL" onclick={{action 'selectUrl'}}>
+      <label for="privateURL" class="{{if privateUrl 'active'}}"><i class="material-icons">link</i> {{loc-x '/question/private_url'}}</label>      
+    </div>
+  {{/if}}
+
+  {{/unless}}
+  </div>
+  {{/if}}  
+  {{!/liquid-spacer}}
+  <div class="row">
+
+    {{#if recaptcha}}
+    <div class="input-field col s12">
+    <div id="recaptcha" class="g-recaptcha" data-sitekey="6LeQfQ0TAAAAAMOHnR9Z9MYJw0D1IRuoP6apsH8W"></div>    
+    </div>    
+    {{/if}}
+    <div class="input-field col s12">
+    {{#unless showSubmit}}
+    <button class="btn waves-effect waves-light" type="submit" name="action" disabled>{{{submitText}}}</button>
+    {{else}}
+    <button class="btn waves-effect waves-light" type="submit" name="action">{{{submitText}}}</button>    
+    {{/unless}}
+    </div>
+  </div> 
+</div>  
+</form>  

@@ -1,0 +1,26 @@
+<div class="section no-pad-bot" id="index-banner">
+	<div class="container">
+		<div class="row">
+			<div class="col s12">
+			{{search-box breadcrumb=(concat-str '#' tagName)  jumpToQuestion='jumpToQuestion' jumpToTag='jumpToTag'}}
+			</div>		
+			<div class="col s12 m7">
+			{{question-list questionList=questions infinityLoad='infinityLoad'}}
+			</div>
+			<div class="col s12 m5">
+				<div class="toc-wrapper">
+
+					{{top-tag tags=tags}}
+
+					{{post-question}}
+					
+
+					{{#each latestQuestion as |question|}}
+					{{latest-box question=question comments=comments}}
+					{{/each}}
+				</div>					
+			</div>
+		</div>
+	</div>
+</div>
+

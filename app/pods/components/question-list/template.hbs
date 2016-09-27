@@ -1,0 +1,18 @@
+{{#each questionList as |question|}}
+{{question-card question=question onVote="onVote" showOptions=false hideQuestionDetail=true enableEditLink=enableEditLink}}
+{{else if enableNoItemLink}}
+{{#link-to 'question.edit' 0 'new' }}
+<div class="card no-question" >
+<div class="card-image" style="background-image:url('/assets/images/no-question.png');">
+	<span class="card-title " style="background-color: rgba(0,0,0,0.5);">{{{noResultText}}}</span>
+</div>
+</div>
+{{/link-to}}
+{{else}}
+<div class="card no-question" >
+<div class="card-image" style="background-image:url('/assets/images/no-question.png');">
+	<span class="card-title " style="background-color: rgba(0,0,0,0.5);">{{{noResultText}}}</span>
+</div>
+</div>
+{{/each}}
+{{infinity-loader infinityModel=questionList destroyOnInfinity=false loadedText="" loadingText="Loading..."}}	

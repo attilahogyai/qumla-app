@@ -1,0 +1,14 @@
+{{#if tags}}
+<div class="card q-card" style="background-color:#b1dcfb !important">
+<div class="card-content">		
+	<header>
+	<span class="card-title" style="font-weight:400;color:white">{{loc-x '/index/top_tags'}}</span>		
+	</header>
+<div class="q-link collection z-depth-0 no-border">
+{{#each tags as |tag|}}
+{{#link-to 'hashtag' (tag-trunc tag.tag) class="collection-item tag"}}{{tag.tag}}{{/link-to}}					
+{{/each}}
+</div>		
+</div>	
+</div>
+{{/if}}

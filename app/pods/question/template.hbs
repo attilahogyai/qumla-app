@@ -1,0 +1,25 @@
+{{#page-view scrollToTop=true}}
+<div class="section no-pad-bot">
+<div class="container">
+<div class="row">
+{{#unless (eq-o routeName 'question-detail')}}
+<div class="col s12">
+{{search-box breadcrumb=(loc-x (concat-str '/page/' routeName)) jumpToQuestion='jumpToQuestion' jumpToTag='jumpToTag'}}
+</div>
+{{else}}
+<!--div class="col s12">
+
+<nav class="bread-nav qdetail">
+<div class="bread-nav-wrapper ">
+Szavazz és nézd meg az eredményt!
+</div>
+</nav>
+
+</div-->
+{{/unless}}
+
+{{outlet}}
+</div>
+</div>
+</div>
+{{/page-view}}

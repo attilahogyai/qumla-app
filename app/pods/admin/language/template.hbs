@@ -1,0 +1,47 @@
+<a href="#" {{action "listItems" "langtext" on="click"}} class="waves-effect waves-light btn">List</a>
+<form name="input" {{action "commit" on="submit"}}>
+{{#if message}}
+<div class="row">
+	<div class="l12 col">
+	<br>
+	<div data-alert class="alert-box breadcrumb blue-text {{if isError 'warning'}} {{if isCompleted 'success-fade-out'}}">{{message}}</div>
+	</div>
+</div>
+{{#unless isEditMode}}
+<div class="row">
+	<div class="l12 col"><a href="#" class="button" {{action "initNew" on="click"}}>{{loc-x '/button/new_record'}}</a></div>
+</div>
+{{/unless}}
+{{/if}}
+{{#if isEditMode}}
+
+{{#each fields as |f|}}
+<div class="row">{{log f.meta}}
+	<div class="l12 col"><label for="name">{{f.fieldName}}
+	{{#if f.isTextarea}}
+	{{textarea rows="7" value=f.fieldValue}}
+	{{else}}
+	{{input value=f.fieldValue type=f.displayType}}
+	{{/if}}
+	</label></div>
+</div>
+{{/each}}
+
+ <div class="row">
+	<div class="l12 col">
+	<button type="button" disabled={{isCompleted}} class="right button {{if isCompleted 'disabled'}}" {{action "remove"}}>&times;{{loc-x '/button/delete'}}</button>
+	<button type="sumbit" disabled={{isCompleted}} class="left button {{if isCompleted 'disabled'}}"  {{action "commit"}}>{{loc-x '/button/save'}}</button>
+	<button type="sumbit" disabled={{isCompleted}} class="left button {{if isCompleted 'disabled'}}"  {{action "copyasnew"}}>{{loc-x '/button/copyasnew'}}</button>
+
+	</div>
+</div>
+{{/if}}
+</form>
+<div class="row">
+	{{#each objectList as |o|}}
+	<div class="m4 s12 col"><a href="#" {{action "loadInstance" o.id on="click"}} class="close"><small>{{o.stringRepr}}</small></a></div>
+	{{/each}}
+</div>
+
+
+

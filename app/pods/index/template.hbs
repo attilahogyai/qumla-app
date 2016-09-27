@@ -1,0 +1,23 @@
+{{#page-view scrollToTop=true}}
+<div class="section no-pad-bot" id="index-banner">
+	<div class="container">
+		<div class="row">
+			<div class="col s12">
+			{{search-box breadcrumb=(loc-x '/category/popular') jumpToQuestion='jumpToQuestion' jumpToTag='jumpToTag' jumpToSearch='jumpToSearch'}}
+			</div>			
+			<div class="col s12 m7">
+			{{question-list questionList=questions infinityLoad='infinityLoad'}}
+			</div>
+			<div class="col s12 m5">
+				<div class="toc-wrapper">
+					{{post-question}}				
+		          	{{top-tag tags=tags}}
+					{{#each latestQuestion as |question|}}
+					{{latest-box question=question comments=comments}}
+					{{/each}}		          	
+				</div>					
+			</div>
+		</div>
+	</div>
+</div>
+{{/page-view}}

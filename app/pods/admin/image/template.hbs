@@ -1,0 +1,88 @@
+<a href="#" {{action "listItems" "image" on="click"}} class="waves-effect waves-light btn">List</a>
+<form name="input" {{action "commit" on="submit"}}>
+{{#if message}}
+<div class="row">
+	<div class="l12 col">
+	<br>
+	<div data-alert class="alert-box breadcrumb blue-text {{if isError 'warning'}} {{if isCompleted 'success-fade-out'}}">{{message}}</div>
+	</div>
+</div>
+{{#unless isEditMode}}
+<div class="row">
+	<div class="l12 col"><a href="#" class="button" {{action "initNew" on="click"}}>{{loc-x '/button/new_record'}}</a></div>
+</div>
+{{/unless}}
+{{/if}}
+
+
+{{#pl-uploader for="upload-image" url="uploadfile" extensions="jpg jpeg png gif" multiple="false" onfileadd="setUploadImage" as |queue dropzone|}}
+    <div class="swiper-slide card hoverable {{if (eq-o uploadImage.path selectedImage.path) 'active'}}" id={{dropzone.id}}>
+    <div class="card-image" style="background-image:url('{{uploadFileUrl}}')">
+      <span class="card-title question-title">{{question.title}}</span>
+      <div style="top:0px;position:absolute;width:100%;text-align:center;background-color:rgba(255,255,255,0.5);padding:1em">
+      {{#if dropzone.active}}
+        {{#if dropzone.valid}}
+          Drop now
+        {{else}}
+          Invalid
+        {{/if}}
+      {{else}}
+        {{#if dropzone.enabled}}
+          <a id="upload-image" style="font-size:16px;line-height:16px">
+          <i class="material-icons" style="font-size:16px;line-height:16px">add_to_photos</i>
+          <b>Drop file</b> to upload <br>
+          (or click)</a>        
+        {{/if}}
+      {{/if}}
+      </div> 
+    </div>
+    </div>
+{{/pl-uploader}}
+<input type="button" value="Upload" {{action 'uploadImage'}}>
+
+
+{{#if isEditMode}}
+
+<div class="row">
+	<div class="l12 col">
+	<img src="/img/thumb/{{instance.path}}" width="250px">
+	</div>
+</div>
+
+{{#each fields as |f|}}
+<div class="row">{{log f.meta}}
+	<div class="l12 col"><label for="name">{{f.fieldName}}
+	{{#if f.isTextarea}}
+	{{textarea rows="7" value=f.fieldValue}}
+	{{else}}
+	{{input value=f.fieldValue type=f.displayType}}
+	{{/if}}
+	</label></div>
+</div>
+{{/each}}
+
+ <div class="row">
+	<div class="l12 col">
+	<button type="button" disabled={{isCompleted}} class="right button {{if isCompleted 'disabled'}}" {{action "remove"}}>&times;{{loc-x '/button/delete'}}</button>
+	<button type="sumbit" disabled={{isCompleted}} class="left button {{if isCompleted 'disabled'}}"  {{action "commit"}}>{{loc-x '/button/save'}}</button>
+	<button type="sumbit" disabled={{isCompleted}} class="left button {{if isCompleted 'disabled'}}"  {{action "copyasnew"}}>{{loc-x '/button/copyasnew'}}</button>
+
+	</div>
+</div>
+{{/if}}
+</form>
+<div class="row">
+	{{#each objectList as |o|}}
+	<div class="s4 col" style="height:60px;">
+	<a href="#" {{action "loadInstance" o.id on="click"}} class="close"><small><img src="/img/thumb/{{o.path}}" height="50px"></small></a>
+	</div>
+	<div class="s8 col" style="height:60px;">
+	<a href="#" {{action "loadInstance" o.id on="click"}} class="close">{{o.stringRepr}}</a>
+	</div>
+	{{/each}}
+
+
+</div>
+
+
+

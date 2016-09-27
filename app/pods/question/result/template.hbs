@@ -1,0 +1,155 @@
+	<div class="col s12 m7">
+	{{question-card question=question onVote="onVote" showOptions=false enableDetailLink=false hideQuestionDetail=true}}
+	</div>
+	<div class="col s12 m5">
+		<div class="card winner-box">
+		<div class="card-content">
+
+		{{#if (and-b summary highest)}}
+			<div class="winner-box-title left">{{{display-votes highest.count}}}</div>
+			{{donut-chart seriesList=summary top=highest}}
+			<div class="winner-box-footer">
+				<div class="winner-box-title">{{highest.option.text}}</div>
+				<div>Most voted since {{date-f first.firstdate}}</div>
+			</div>	
+		{{else}}
+		<div class="winner-box-title left">
+			Need more vote! 
+		</div>
+		{{donut-chart seriesList=summary top=highest}}
+		<div class="winner-box-footer"><span class="winner-box-title">Share it!</span><br>
+
+		</div>			
+		{{/if}}			
+		</div>
+		</div>
+	</div>
+	<div class="col m12">
+	{{#unless question.subscribed}}
+	<a href="#!" class="waves-effect waves-light inv-accent-btn white-text" {{action 'openEmailModal'}}><b>Follow</b> and get updates!</a>
+	{{else}}
+	<input type="button" value="Subscribed" class="inv-accent-btn" disabled="true">
+	{{/unless}}
+	</div>
+
+{{#if countryData}}
+<div class="col s12">
+{{region-map regionData=regionData countryData=countryData zoomCountry=zoomCountry votedOptions=votedOptions backToRegion=(action 'backToRegion') regionClicked=(action 'regionClicked') countryList=countryList allOptions=question.sortedOptions}}
+</div>
+{{/if}}
+
+
+
+{{!#if session.isRegistered}}
+	<div class="col s12">
+	<div class="card q-card q-chart">
+		<div class="card-content white-text">		
+			<header >
+			<span class="card-title"><i class="material-icons">poll</i><span> {{highest.total}} votes for {{summary.length}} options</span></span>		
+			</header>
+<div class="general-votes row" style="margin:1em 0;">
+<div id="{{cid}}" class="s12 m8 col">
+{{bar-chart seriesList=summary showLabelY=true allOptions=question.options wrap=false}}
+</div>
+<div class="legend s12 m4 col">
+{{pie-chart seriesList=summary allOptions=question.options wrap=false}}
+</div>
+<div class="legend s12col">
+{{question-legend legendItems=question.sortedOptions}}
+</div>
+</div>
+
+		</div>	
+	</div>
+	</div>
+	{{#if historyEnabled}}
+	<div class="col s12">
+	<div class="card q-card q-chart">
+		<div class="card-content white-text">		
+			<header >
+			<span class="card-title">
+			{{#if percentageHistory}}
+			<b>%</b><span> vote percent history</span>
+			|
+            <a href="#" {{action 'togglePercentage'}}><i class="material-icons">timeline</i><span> vote count history</span></a>
+            {{else}}
+			<a href="#" {{action 'togglePercentage'}}><b>%</b><span> vote percent history</span></a>
+			|
+            <i class="material-icons">timeline</i><span> vote count history</span>
+            {{/if}}
+            </span>		
+			</header>
+			{{#if percentageHistory}}
+			{{line-chart xaxis=historyStatData.xaxis series=historyStatData.series allOptions=question.sortedOptions suffix='%'}}
+			{{else}}
+			{{line-chart xaxis=historyStatData.xaxis series=historyStatData.series allOptions=question.sortedOptions}}			
+			{{/if}}
+		</div>	
+	</div>
+	</div>	
+	{{/if}}
+{{!else}}
+	<!--div class="col s12">
+	<div class="card q-card">
+		<div class="card-content white-text">		
+			<header>
+			<span class="card-title">{{!loc-x '/result/voting_distribution'}}</span>		
+			</header>
+		</div>
+		{{!registration-required}}	
+	</div>
+	</div-->
+{{!/if}}
+
+<div class="col s12">
+<div class="card q-card q-chart">
+<div class="card-content">	
+<header>
+<span class="card-title"><i class="material-icons">map</i>{{loc-x '/result/votingarea'}}</span>
+</header>
+{{g-heat-map center=mylocation regionData=votingarea region=region votedOptions=votedOptions}}
+</div>
+</div>
+</div>
+<!-- question card for description-->
+<div class="col s12">
+{{question-card question=question onVote="onVote" showOptions=false hideHeader=true}}
+</div>
+
+
+{{!g-map class="col s12"}}
+<div class="col s12">
+<div class="card q-card">
+<div class="card-content">		
+<header>
+<span class="card-title">{{comments.length}} Comments</span>
+</header>
+<div class="row">
+<div class="input-field col s12" style="margin:3em 0;">
+{{post-comment question=question onComment="onComment"}}
+</div>
+</div>
+
+<ul>
+{{#each comments as |comment|}}
+{{#unless comment.original}}
+{{q-comment comment=comment onComment="onComment"}}
+{{/unless}}
+{{/each}}
+</ul>
+</div>
+</div>
+</div>
+ <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Give an email address</h4>
+      <p>
+      	{{q-input type="text" class="" id="email" placeholder="Your email address" isValid=(v-get this 'followaddress' 'isValid') value=followaddress update=(action (mut followaddress))}}	
+      	 <a href="#!" class="modal-action modal-close waves-light waves-effect inv-accent-btn" {{action 'subscribe'}}>Get updates</a>
+      </p>
+    </div>
+    <div class="modal-footer">
+     
+    </div>
+ </div>
+
